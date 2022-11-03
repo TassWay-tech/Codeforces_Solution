@@ -1,17 +1,21 @@
-def get_score(left, mid, right):
-    return abs(left - mid) + abs(mid - right)
+def get_score(one, two, three):
+    return abs(one - two) + abs(two - three)
 
 def solution(num_list: list, length: int):
     num_list.sort()
-    left, mid, right = num_list[0], num_list[-1], num_list[1]
-
-    for i in range(2, length - 1):
-        if get_score(num_list[i], mid, right) < get_score(left, mid, num_list[i]):
-            right = num_list[i]
-        else:
-            left = num_list[i]
+    high = 0
     
-    return get_score(left, mid, right)
+    for i in range(length - 2):
+        value = num_list[i + 1] - num_list[i] + num_list[-1] - num_list[i]
+        if value > high:
+            high = value
+
+    for i in range(1, length - 1):
+        value = num_list[i + 1] - num_list[i] + num_list[i + 1] - num_list[0]
+        if value > high:
+            high = value
+    
+    return high
 
 if __name__ == "__main__":
     t = int(input())
